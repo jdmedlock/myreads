@@ -17,13 +17,17 @@ class BookShelf extends Component {
       <div className="bookshelf">
         <h2 className="bookshelf-title">{title}</h2>
         <div className="bookshelf-books">
-          <ol className="books-grid">
-            {books.map((book) => (
-              <li>
-                <BookCover book={book} />
-              </li>
-            ))}
-          </ol>
+          {books.length === 0 ? (
+            <p>No books have been assigned to this shelf</p>
+          ) : (
+            <ol className="books-grid">
+              {books.map((book) => (
+                <li>
+                  <BookCover book={book} />
+                </li>
+              ))}
+            </ol>
+          )}
         </div>
       </div>
     );
