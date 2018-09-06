@@ -73,6 +73,12 @@ class BooksApp extends React.Component {
                   books={this.state.books.filter(book => book.shelf === "read")}
                 />
               )}/>
+              <Route exact path='/' render={() => (
+                <BookShelf
+                  title="None"
+                  books={this.state.books.filter(book => book.shelf === "none")}
+                />
+              )}/>
             </div>
             <div className="open-search">
               <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
