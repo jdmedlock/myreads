@@ -9,7 +9,7 @@ class BookCover extends Component {
   }
 
   render() {
-    const { imageLinks, title, authors, shelf } = this.props.book;
+    const { imageLinks, title, authors } = this.props.book;
 
     return (
       <div className="book">
@@ -18,7 +18,7 @@ class BookCover extends Component {
             style={{ width: 128, height: 193, 
             backgroundImage: `url(${imageLinks.thumbnail})` }}>
           </div>
-          <BookShelfChanger currentShelf={shelf} />
+          <BookShelfChanger book={this.props.book} />
         </div>
         <div className="book-title">{title}</div>
         <div className="book-authors">{authors[0]}</div>
