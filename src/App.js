@@ -1,19 +1,12 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 import MainPage from './MainPage';
 import SearchPage from './SearchPage';
 import './App.css';
 
+const MAIN_PAGE_PATH = '/';
+
 class BooksApp extends React.Component {
-  state = {
-    /**
-     * TODO: Instead of using this state variable to keep track of which page
-     * we're on, use the URL in the browser's address bar. This will ensure that
-     * users can use the browser's back and forward buttons to navigate between
-     * pages, as well as provide a good URL they can bookmark and share.
-     */
-    showSearchPage: false,
-  }
 
   /**
    * @description Create the HTML for the following application pages:
@@ -25,21 +18,19 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div className="app">
-        {this.state.showSearchPage ? (
+        {window.location.pathname === MAIN_PAGE_PATH ? (
           <div>
             <Route exact path='/' render={() => (
-              <SearchPage />
+              <MainPage/>
             )}/>
           </div>
-        ) : (
-          <div>
-            <Route exact path='/' render={() => (
-              <MainPage />
-            )}/>
-          </div>
+          ) : (
+            <div>
+              <Route exact path='/search' component={SearchPage} />
+            </div>
         )}
         <div className="open-search">
-          <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
+          <Link className='close-search' to='/search'>Add a book</Link>
         </div>
       </div>
     )
