@@ -50,7 +50,9 @@ render() {
     return (
       <div className="app">
         {this.state.showSearchPage ? (
-          /* Render the Search page */
+          /*
+           * Render the Search page
+           */
           <div className="search-books">
             <div className="search-books-bar">
               <a className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</a>
@@ -72,7 +74,9 @@ render() {
             </div>
           </div>
         ) : (
-          /* Render the Main page */
+          /*
+           * Render the Main page
+           */
           <div className="list-books">
             <div className="list-books-title">
               <h1>MyReads</h1>
