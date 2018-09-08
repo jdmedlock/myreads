@@ -1,17 +1,21 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import * as BooksAPI from './BooksAPI';
 
 class BookShelfChanger extends Component {
 
   static propTypes = {
-    book: PropTypes.object.isRequired
+    book: PropTypes.object.isRequired,
+    changeShelf: PropTypes.func.isRequired
   }
 
-  changeShelf(book, newShelf) {
-    BooksAPI.update({ id: book.id }, newShelf).then((book) => {
-      // this.setState({ books });
-      console.log(book);
+  state = {
+    currentShelf: this.props.book.shelf,
+  }
+
+  moveToNewShelf = (event) => {
+    this.props.changeShelf(this.props.book, event.target.value);
+    this.setState({
+        currentShelf: event.target.value,
     });
   }
 
@@ -20,7 +24,7 @@ class BookShelfChanger extends Component {
     return (
       <div className="book-shelf-changer">
         <select value={book.shelf}
-            onChange={(event) => this.changeShelf(book, event.target.value)}>
+            onChange={(event) => this.moveToNewShelf(event)}>
           <option value="move" disabled>Move to...</option>
           <option value="currentlyReading">Currently Reading</option>
           <option value="wantToRead">Want to Read</option>
