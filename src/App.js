@@ -5,6 +5,12 @@ import SearchPage from './SearchPage';
 import './App.css';
 
 const MAIN_PAGE_PATH = '/';
+const SHELF_NAMES = [
+  {id: 'currentlyReading', description: 'Currently Reading'},
+  {id: 'wantToRead', description: 'Want to Read'},
+  {id: 'read', description: 'Read'},
+  {id: 'none', description: 'None'}
+];
 
 class BooksApp extends React.Component {
 
@@ -21,7 +27,7 @@ class BooksApp extends React.Component {
         {window.location.pathname === MAIN_PAGE_PATH ? (
           <div>
             <Route exact path='/' render={() => (
-              <MainPage/>
+              <MainPage shelfNames={SHELF_NAMES} />
             )}/>
           </div>
           ) : (

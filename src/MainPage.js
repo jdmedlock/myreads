@@ -1,10 +1,17 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import * as BooksAPI from './BooksAPI';
 import { Route } from 'react-router-dom';
 import BookShelf from './BookShelf';
 import './App.css';
 
 class MainPage extends React.Component {
+
+  static propTypes = {
+    shelfNames: PropTypes.array.isRequired
+  }
+
+  // MainPage state
   state = {
     books: []
   }
@@ -40,40 +47,24 @@ class MainPage extends React.Component {
    * @memberof BooksApp
    */
   render() {
+    const shelfNames = this.props.shelfNames;
     return (
       <div className="list-books">
         <div className="list-books-title">
           <h1>MyReads</h1>
         </div>
         <div className="list-books-content">
-          <Route exact path='/' render={() => (
-            <BookShelf
-              title="Currently Reading"
-              books={this.state.books.filter(book => book.shelf === "currentlyReading")}
-              changeShelf={this.changeShelf}
-            />
-          )}/>
-          <Route exact path='/' render={() => (
-            <BookShelf
-              title="Want to Read"
-              books={this.state.books.filter(book => book.shelf === "wantToRead")}
-              changeShelf={this.changeShelf}
-            />
-          )}/>
-          <Route exact path='/' render={() => (
-            <BookShelf
-              title="Read"
-              books={this.state.books.filter(book => book.shelf === "read")}
-              changeShelf={this.changeShelf}
-            />
-          )}/>
-          <Route exact path='/' render={() => (
-            <BookShelf
-              title="None"
-              books={this.state.books.filter(book => book.shelf === "none")}
-              changeShelf={this.changeShelf}
-            />
-          )}/>
+          {shelfNames.map((shelf) => {
+            return (
+              <Route key={shelf.id} exact path='/' render={() => (
+                <BookShelf
+                  title={shelf.description}
+                  books={this.state.books.filter(book => book.shelf === shelf.id)}
+                  changeShelf={this.changeShelf}
+                />
+              )}/>
+            );
+          })}
         </div>
       </div>
     )
