@@ -21,10 +21,12 @@ class BookCover extends Component {
     return (
       <div className="book">
         <div className="book-top">
-          <div className="book-cover"
-            style={{ width: 128, height: 193,
-            backgroundImage: `url(${imageLinks.thumbnail})` }}>
-          </div>
+          { imageLinks !== undefined && (
+            <div className="book-cover"
+              style={{ width: 128, height: 193,
+              backgroundImage: `url(${imageLinks.thumbnail})` }}>
+            </div>
+          )}
           <BookShelfChanger book={this.props.book}
             changeShelf={this.props.changeShelf}
             shelfNames={this.props.shelfNames}
