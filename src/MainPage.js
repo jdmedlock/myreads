@@ -61,6 +61,7 @@ class MainPage extends React.Component {
                   title={shelf.description}
                   books={this.state.books.filter(book => book.shelf === shelf.id)}
                   changeShelf={this.changeShelf}
+                  shelfNames={shelfNames}
                 />
               )}/>
             );

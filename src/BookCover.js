@@ -6,7 +6,8 @@ class BookCover extends Component {
 
   static propTypes = {
     book: PropTypes.object.isRequired,
-    changeShelf: PropTypes.func.isRequired
+    changeShelf: PropTypes.func.isRequired,
+    shelfNames: PropTypes.array.isRequired
   }
 
   render() {
@@ -19,7 +20,10 @@ class BookCover extends Component {
             style={{ width: 128, height: 193, 
             backgroundImage: `url(${imageLinks.thumbnail})` }}>
           </div>
-          <BookShelfChanger book={this.props.book} changeShelf={this.props.changeShelf}/>
+          <BookShelfChanger book={this.props.book}
+            changeShelf={this.props.changeShelf}
+            shelfNames={this.props.shelfNames}
+          />
         </div>
         <div className="book-title">{title}</div>
         <div className="book-authors">{authors[0]}</div>
