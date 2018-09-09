@@ -1,9 +1,18 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import BookCover from './BookCover';
 import './App.css';
 
 class SearchPage extends React.Component {
 
+  static propTypes = {
+    books: PropTypes.array.isRequired,
+    shelfNames: PropTypes.array.isRequired,
+    changeShelf: PropTypes.func.isRequired
+  }
+
+  // SearchPage state
   state = {
     searchText: ''
   };
@@ -25,6 +34,9 @@ class SearchPage extends React.Component {
    * @memberof BooksApp
    */
   render() {
+    const books = this.props.books;
+    const shelfNames = this.props.shelfNames;
+    const changeShelf = this.props.changeShelf;
     return (
       <div className="search-books">
         <div className="search-books-bar">
@@ -44,6 +56,11 @@ class SearchPage extends React.Component {
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
+            {books.map((book) => (
+              <li key={book.id}>
+                <BookCover book={book} changeShelf={changeShelf} shelfNames={shelfNames}/>
+              </li>
+            ))}
           </ol>
         </div>
       </div>

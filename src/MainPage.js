@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as BooksAPI from './BooksAPI';
 import { Route } from 'react-router-dom';
 import BookShelf from './BookShelf';
 import './App.css';
@@ -8,36 +7,9 @@ import './App.css';
 class MainPage extends React.Component {
 
   static propTypes = {
-    shelfNames: PropTypes.array.isRequired
-  }
-
-  // MainPage state
-  state = {
-    books: []
-  }
-
-  /**
-   * @description Retrieve all books and add them to the Application state
-   * before rendering the application page
-   * @memberof BooksApp
-   */
-  componentDidMount() {
-    BooksAPI.getAll().then((books) => {
-      this.setState({ books: books });
-    })
-  }
-
-  /**
-   * @description Move the selected book to a new bookshelf
-   * @param {Object} book An object describing the book to be moved
-   * @param {String} newShelf The name of the destination bookshelf
-   * @memberof BooksApp
-   */
-  changeShelf = (book, newShelf) => {
-    BooksAPI.update(book, newShelf).then(() => {
-      book.shelf = newShelf;
-      this.setState((state) => ({ books: state.books.map(book => book) }));
-    });
+    books: PropTypes.array.isRequired,
+    shelfNames: PropTypes.array.isRequired,
+    changeShelf: PropTypes.func.isRequired
   }
 
   /**
