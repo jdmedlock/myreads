@@ -9,6 +9,7 @@
 * [Overview](#overview)
 * [Usage](#usage)
 * [Dependencies](#dependencies)
+* [Application Structure](#application-structure)
 * [Change Log](#change-log)
 * [Contributing](#contributing)
 * [Authors](#authors)
@@ -72,8 +73,8 @@ the main page is displayed and the URL in the browser’s address bar is /.
 
 To start the application simply run `npm run start` or `yarn start` from the
 command line to
-start the application environment. To use the application navigate to the
-`localhost:3000` url in your browser.
+start the application environment. The application will automatically open a
+new tab in your browser with the url `localhost:3000`.
 
 ## Dependencies
 
@@ -86,6 +87,13 @@ This app has the following dependencies
 | React          | Runtime     | UI Library  | N/a           |
 | React-Router   | Runtime     | Declarative routing for React | N/a |
 | React-Scripts  | Runtime     | scripts and configuration used by Create React App | N/a |
+
+## Application Structure
+
+The component structure of the MyReads application is shown in the following
+diagram.
+
+![MyReads Component Structure](https://github.com/jdmedlock/myreads/blob/development/docs/MyReads%20Component%20Structure.png)
 
 ## Change Log
 
