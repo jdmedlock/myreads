@@ -26,10 +26,10 @@ class SearchPage extends React.Component {
    * @memberof SearchPage
    */
   queryBooks(event) {
-    const enteredText = event.target.value.trim();
+    const enteredText = event.target.value;
     this.setState({ searchText: enteredText });
     if (enteredText) {
-      BooksAPI.search(enteredText)
+      BooksAPI.search(enteredText.trim())
       .then((books) => {
         if (books.length > 0) {
           const updatedBooks = this.updateShelf(books);
