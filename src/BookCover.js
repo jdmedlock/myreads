@@ -10,6 +10,11 @@ class BookCover extends Component {
     shelfNames: PropTypes.array.isRequired
   }
 
+  /**
+   * @description Create the main page containing the book cover
+   * @returns {HTMLDivElement} Book cover
+   * @memberof BookCover
+   */
   render() {
     const { imageLinks, title, authors } = this.props.book;
 

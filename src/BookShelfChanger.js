@@ -9,10 +9,16 @@ class BookShelfChanger extends Component {
     shelfNames: PropTypes.array.isRequired
   }
 
+  // BookShelfChanger state
   state = {
     currentShelf: this.props.book.shelf,
   }
 
+  /**
+   * @description Move the book to a new bookshelf
+   * @param {Object} event Event object created for the destination bookshelf
+   * @memberof BookShelfChanger
+   */
   moveToNewShelf = (event) => {
     this.props.changeShelf(this.props.book, event.target.value);
     this.setState({
@@ -20,6 +26,11 @@ class BookShelfChanger extends Component {
     });
   }
 
+  /**
+   * @description Create the bookshelf changer control
+   * @returns {HTMLDivElement} Bookshelf changer control
+   * @memberof BookShelfChanger
+   */
   render() {
     const book = this.props.book;
     const shelfNames = this.props.shelfNames;
@@ -34,13 +45,6 @@ class BookShelfChanger extends Component {
               );
             })
           }
-          {/*
-          <option value="move" disabled>Move to...</option>
-          <option value="currentlyReading">Currently Reading</option>
-          <option value="wantToRead">Want to Read</option>
-          <option value="read">Read</option>
-          <option value="none">None</option>
-          */}
         </select>
       </div>
     );

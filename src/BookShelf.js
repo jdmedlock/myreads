@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import BookCover from './BookCover';
 
-
 class BookShelf extends Component {
 
   static propTypes = {
@@ -12,6 +11,12 @@ class BookShelf extends Component {
     shelfNames: PropTypes.array.isRequired
   }
 
+  /**
+   * @description Create the bookshelf containing the users books organized
+   * into bookshelves
+   * @returns {HTMLDivElement} Book shelf
+   * @memberof BookShelf
+   */
   render() {
     const { books, title, changeShelf, shelfNames } = this.props;
 
