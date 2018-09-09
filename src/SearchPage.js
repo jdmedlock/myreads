@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import * as BooksAPI from './BooksAPI';
-import BookCover from './BookCover';
+// import BookCover from './BookCover';
+import BookShelf from './BookShelf';
 import './App.css';
 
 class SearchPage extends React.Component {
@@ -93,15 +94,18 @@ class SearchPage extends React.Component {
           </div>
         </div>
         <div className="search-books-results">
-          { books.length > 0 && (
-            <ol className="books-grid">
-              {books.map((book) => (
-                <li key={book.id}>
-                  <BookCover book={book} changeShelf={changeShelf} shelfNames={shelfNames}/>
-                </li>
-              ))}
-            </ol>
-          )}
+          {shelfNames.map((shelf) => {
+            const shelfDesc = shelf.id === 'none' ? 'New books...' : shelf.description;
+            return (
+              <BookShelf
+                title={shelfDesc}
+                books={books.filter(book => book.shelf === shelf.id)}
+                changeShelf={changeShelf}
+                shelfNames={shelfNames}
+                key={shelf.id}
+              />
+            )
+          })}
         </div>
       </div>
     )
