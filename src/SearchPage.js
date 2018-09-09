@@ -8,6 +8,7 @@ import './App.css';
 class SearchPage extends React.Component {
 
   static propTypes = {
+    myBooks: PropTypes.array.isRequired,
     shelfNames: PropTypes.array.isRequired,
     changeShelf: PropTypes.func.isRequired
   }
@@ -23,14 +24,15 @@ class SearchPage extends React.Component {
    * @param {*} event Event created from the user input activity
    * @memberof SearchPage
    */
-  updateQuery(event) {
+  queryBooks(event) {
     const enteredText = event.target.value.trim();
     this.setState({ searchText: enteredText });
     if (enteredText) {
       BooksAPI.search(enteredText)
       .then((books) => {
         if (books.length > 0) {
-          this.setState({ books: books });
+          const updatedBooks = this.updateShelf(books);
+          this.setState({ books: updatedBooks });
         } else {
           this.setState({ books: [] });
         }
@@ -39,6 +41,28 @@ class SearchPage extends React.Component {
     } else {
       this.setState({ books: [] });
     }
+  }
+
+  /**
+   * @description Add a shelf property to each book object. If the book is in
+   * the `myBooks` prop copy the shelf designation. Otherwise, set the shelf
+   * to 'none'.
+   * @param {Array} books Book objects
+   * @returns {Array} An array of book objects with a `shelf` property added
+   * to each book
+   * @memberof SearchPage
+   */
+  updateShelf(books) {
+    return books.map(book => {
+      let updatedBook = book;
+      const bookIndex = this.props.myBooks.findIndex((myBook) => myBook.id === book.id);
+      if (bookIndex !== -1) {
+        updatedBook.shelf = this.props.myBooks[bookIndex].shelf;
+      } else {
+        updatedBook.shelf = 'none';
+      }
+      return updatedBook;
+    });
   }
 
   /**
@@ -65,7 +89,7 @@ class SearchPage extends React.Component {
             */}
             <input type="text" placeholder="Search by title or author"
               value={searchText}
-              onChange={(event) => this.updateQuery(event)} />
+              onChange={(event) => this.queryBooks(event)} />
           </div>
         </div>
         <div className="search-books-results">

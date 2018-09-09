@@ -56,19 +56,21 @@ class BooksApp extends React.Component {
    * @memberof BooksApp
    */
   render() {
+    const books = this.state.books;
     return (
       <div className="app">
         {window.location.pathname === MAIN_PAGE_PATH ? (
           <div>
             <Route exact path='/' render={() => (
-              <MainPage books={this.state.books} shelfNames={SHELF_NAMES}
+              <MainPage books={books} shelfNames={SHELF_NAMES}
                 changeShelf={this.changeShelf} />
               )}/>
           </div>
           ) : (
             <div>
               <Route exact path='/search' render={() => (
-                <SearchPage shelfNames={SHELF_NAMES} changeShelf={this.changeShelf} />
+                <SearchPage myBooks={books} shelfNames={SHELF_NAMES}
+                  changeShelf={this.changeShelf} />
               )}/>
             </div>
         )}
