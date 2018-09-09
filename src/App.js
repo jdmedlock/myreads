@@ -68,9 +68,8 @@ class BooksApp extends React.Component {
           ) : (
             <div>
               <Route exact path='/search' render={() => (
-                <SearchPage books={this.state.books} shelfNames={SHELF_NAMES}
-                  changeShelf={this.changeShelf} />
-            )}/>
+                <SearchPage shelfNames={SHELF_NAMES} changeShelf={this.changeShelf} />
+              )}/>
             </div>
         )}
         <div className="open-search">
