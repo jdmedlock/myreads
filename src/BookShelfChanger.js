@@ -41,7 +41,7 @@ class BookShelfChanger extends Component {
           <option value="move" disabled>Move to...</option>
           { shelfNames.map((shelf) => {
               return (
-                <option value={shelf.id}>{shelf.description}</option>
+                <option value={shelf.id} key={shelf.id}>{shelf.description}</option>
               );
             })
           }

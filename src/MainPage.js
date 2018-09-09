@@ -19,7 +19,7 @@ class MainPage extends React.Component {
    * @memberof BooksApp
    */
   render() {
-    const shelfNames = this.props.shelfNames;
+    const { books, shelfNames, changeShelf } = this.props;
     return (
       <div className="list-books">
         <div className="list-books-title">
@@ -31,8 +31,8 @@ class MainPage extends React.Component {
               <Route key={shelf.id} exact path='/' render={() => (
                 <BookShelf
                   title={shelf.description}
-                  books={this.state.books.filter(book => book.shelf === shelf.id)}
-                  changeShelf={this.changeShelf}
+                  books={books.filter(book => book.shelf === shelf.id)}
+                  changeShelf={changeShelf}
                   shelfNames={shelfNames}
                 />
               )}/>

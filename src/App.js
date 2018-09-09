@@ -15,35 +15,39 @@ const SHELF_NAMES = [
 
 class BooksApp extends React.Component {
 
-    // MainPage state
-    state = {
-      books: []
-    }
-  
-    /**
-     * @description Retrieve all books and add them to the Application state
-     * before rendering the application page
-     * @memberof BooksApp
-     */
-    componentDidMount() {
-      BooksAPI.getAll().then((books) => {
-        this.setState({ books: books });
-      })
-    }
-  
-    /**
-     * @description Move the selected book to a new bookshelf
-     * @param {Object} book An object describing the book to be moved
-     * @param {String} newShelf The name of the destination bookshelf
-     * @memberof BooksApp
-     */
-    changeShelf = (book, newShelf) => {
-      BooksAPI.update(book, newShelf).then(() => {
-        book.shelf = newShelf;
-        this.setState((state) => ({ books: state.books.map(book => book) }));
-      });
-    }
-  
+  // MainPage state
+  state = {
+    books: []
+  }
+
+  /**
+   * @description Retrieve all books and add them to the Application state
+   * before rendering the application page
+   * @memberof BooksApp
+   */
+  componentDidMount() {
+    BooksAPI.getAll()
+    .then((books) => {
+      this.setState({ books });
+    })
+    .catch((error) => {
+      console.log("Error during componentDidMount. error: ", error);
+    });
+  }
+
+  /**
+   * @description Move the selected book to a new bookshelf
+   * @param {Object} book An object describing the book to be moved
+   * @param {String} newShelf The name of the destination bookshelf
+   * @memberof BooksApp
+   */
+  changeShelf = (book, newShelf) => {
+    BooksAPI.update(book, newShelf).then(() => {
+      book.shelf = newShelf;
+      this.setState((state) => ({ books: state.books.map(book => book) }));
+    });
+  }
+
   /**
    * @description Create the HTML for the following application pages:
    * - main page containing the users books organized into bookshelves
@@ -57,7 +61,7 @@ class BooksApp extends React.Component {
         {window.location.pathname === MAIN_PAGE_PATH ? (
           <div>
             <Route exact path='/' render={() => (
-              <MainPage books={this.books} shelfNames={SHELF_NAMES}
+              <MainPage books={this.state.books} shelfNames={SHELF_NAMES}
                 changeShelf={this.changeShelf} />
               )}/>
           </div>
@@ -77,4 +81,4 @@ class BooksApp extends React.Component {
   }
 }
 
-export default BooksApp
+export default BooksApp;
