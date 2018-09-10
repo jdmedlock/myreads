@@ -1,11 +1,10 @@
 import React from 'react';
-import { Link, Route } from 'react-router-dom';
+import { Link, Route, Switch } from 'react-router-dom';
 import * as BooksAPI from './BooksAPI';
 import MainPage from './MainPage';
 import SearchPage from './SearchPage';
 import './App.css';
 
-const MAIN_PAGE_PATH = '/';
 const SHELF_NAMES = [
   {id: 'currentlyReading', description: 'Currently Reading'},
   {id: 'wantToRead', description: 'Want to Read'},
@@ -36,7 +35,7 @@ class BooksApp extends React.Component {
   }
 
   /**
-   * @description Move the selected book to a new bookshelf
+   * @description Move the selected book to a new bookshelf.
    * @param {Object} book An object describing the book to be moved
    * @param {String} newShelf The name of the destination bookshelf
    * @memberof BooksApp
@@ -44,7 +43,13 @@ class BooksApp extends React.Component {
   changeShelf = (book, newShelf) => {
     BooksAPI.update(book, newShelf).then(() => {
       book.shelf = newShelf;
-      this.setState((state) => ({ books: state.books.map(book => book) }));
+      this.setState((state) => (
+        // Ensure that the book to be moved is removed from the list before
+        // adding it back into the list with an updated shelf
+        { books: state.books
+                    .filter( currentBook => currentBook.id !== book.id )
+                    .concat(book)
+        }));
     });
   }
 
@@ -59,21 +64,16 @@ class BooksApp extends React.Component {
     const books = this.state.books;
     return (
       <div className="app">
-        {window.location.pathname === MAIN_PAGE_PATH ? (
-          <div>
-            <Route exact path='/' render={() => (
-              <MainPage books={books} shelfNames={SHELF_NAMES}
-                changeShelf={this.changeShelf} />
-              )}/>
-          </div>
-          ) : (
-            <div>
-              <Route exact path='/search' render={() => (
-                <SearchPage myBooks={books} shelfNames={SHELF_NAMES}
-                  changeShelf={this.changeShelf} />
-              )}/>
-            </div>
-        )}
+        <Switch>
+          <Route exact path='/' render={() => (
+            <MainPage books={books} shelfNames={SHELF_NAMES}
+              changeShelf={this.changeShelf} />
+            )}/>
+          <Route exact path='/search' render={() => (
+            <SearchPage myBooks={books} shelfNames={SHELF_NAMES}
+              changeShelf={this.changeShelf} />
+          )}/>
+        </Switch>
         <div className="open-search">
           <Link className='close-search' to='/search'>Add a book</Link>
         </div>
