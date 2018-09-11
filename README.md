@@ -82,6 +82,7 @@ This app has the following dependencies
 
 | Module/Library | Environment | Description | Related Files |
 |:---------------|:------------|:------------|:--------------|
+| Lodash         | Runtime     | _debounce text input | N/a  |
 | NPM            | Development | Package manager | package.json |
 | Prop-Types     | Runtime     | Type checking for props | N/a |
 | React          | Runtime     | UI Library  | N/a           |

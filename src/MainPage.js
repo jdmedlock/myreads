@@ -4,13 +4,7 @@ import { Route } from 'react-router-dom';
 import BookShelf from './BookShelf';
 import './App.css';
 
-class MainPage extends React.Component {
-
-  static propTypes = {
-    books: PropTypes.array.isRequired,
-    shelfNames: PropTypes.array.isRequired,
-    changeShelf: PropTypes.func.isRequired
-  }
+const MainPage = (props) => {
 
   /**
    * @description Create the main page containing the users books organized
@@ -18,30 +12,34 @@ class MainPage extends React.Component {
    * @returns {HTMLDivElement} Main application page
    * @memberof BooksApp
    */
-  render() {
-    const { books, shelfNames, changeShelf } = this.props;
-    return (
-      <div className="list-books">
-        <div className="list-books-title">
-          <h1>MyReads</h1>
-        </div>
-        <div className="list-books-content">
-          {shelfNames.map((shelf) => {
-            return (
-              <Route key={shelf.id} exact path='/' render={() => (
-                <BookShelf
-                  title={shelf.description}
-                  books={books.filter(book => book.shelf === shelf.id)}
-                  changeShelf={changeShelf}
-                  shelfNames={shelfNames}
-                />
-              )}/>
-            );
-          })}
-        </div>
+  const { books, shelfNames, changeShelf } = props;
+  return (
+    <div className="list-books">
+      <div className="list-books-title">
+        <h1>MyReads</h1>
       </div>
-    )
-  }
+      <div className="list-books-content">
+        {shelfNames.map((shelf) => {
+          return (
+            <Route key={shelf.id} exact path='/' render={() => (
+              <BookShelf
+                title={shelf.description}
+                books={books.filter(book => book.shelf === shelf.id)}
+                changeShelf={changeShelf}
+                shelfNames={shelfNames}
+              />
+            )}/>
+          );
+        })}
+      </div>
+    </div>
+  )
+}
+
+MainPage.propTypes = {
+  books: PropTypes.array.isRequired,
+  shelfNames: PropTypes.array.isRequired,
+  changeShelf: PropTypes.func.isRequired
 }
 
 export default MainPage;

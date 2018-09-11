@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import debounce from "lodash.debounce";
 import * as BooksAPI from './BooksAPI';
-// import BookCover from './BookCover';
 import BookShelf from './BookShelf';
 import './App.css';
 
@@ -14,19 +14,28 @@ class SearchPage extends React.Component {
     changeShelf: PropTypes.func.isRequired
   }
 
-  // SearchPage state
-  state = {
-    searchText: '',
-    books: []
+  constructor(props) {
+    super(props);
+
+    // SearchPage state
+    this.state = {
+      searchText: "",
+      books: []
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.emitChangeDebounce = debounce(this.queryBooks, 100);
+  }
+
+  handleChange(event) {
+    this.emitChangeDebounce(event.target.value);
   }
 
   /**
    * @description Capture the search text as it is entered by the user
-   * @param {*} event Event created from the user input activity
+   * @param {String} enteredText Search terms entered by the user
    * @memberof SearchPage
    */
-  queryBooks(event) {
-    const enteredText = event.target.value;
+  queryBooks(enteredText) {
     this.setState({ searchText: enteredText });
     if (enteredText) {
       BooksAPI.search(enteredText.trim())
@@ -90,7 +99,8 @@ class SearchPage extends React.Component {
             */}
             <input type="text" placeholder="Search by title or author"
               value={searchText}
-              onChange={(event) => this.queryBooks(event)} />
+              onChange={this.handleChange}
+            />
           </div>
         </div>
         <div className="search-books-results">
